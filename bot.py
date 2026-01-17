@@ -3,6 +3,8 @@ from discord import app_commands
 from dotenv import load_dotenv
 from groq import AsyncGroq
 
+from keep_alive import keep_alive #NEW
+
 load_dotenv()
 DISCORD_APP_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
@@ -10,6 +12,8 @@ TEST_GUILD = discord.Object(id=1457450076812349672)  # for somerville's suite
 groq_client = AsyncGroq(
     api_key=os.environ.get("GROQ_API_KEY"),
 )
+
+keep_alive() # Test command
 
 class LogosClient(discord.Client):
     user: discord.Client.user
