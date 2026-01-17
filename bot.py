@@ -29,12 +29,12 @@ intents = discord.Intents.default()
 client = LogosClient(intents=intents)
 
 @client.tree.command()
-async def show(interaction: discord.Interaction):
+async def test(interaction: discord.Interaction):
     """
     A secret message!
     """
     await interaction.response.defer(ephemeral=True)
-    await interaction.followup.send(content="This message is only visible to you!", ephemeral=True)
+    await interaction.followup.send(content="The Logos bot is online!", ephemeral=True)
 
 @client.tree.command(name="debate", description="The main command for starting a debate and having Logos monitor it")
 async def debate(interaction: discord.Interaction, member: discord.Member, *, topic: str):
@@ -174,27 +174,24 @@ async def argue(interaction: discord.Interaction, argument: str):
     await interaction.response.defer(ephemeral=True)
     await interaction.followup.send(content=logos_feedback, ephemeral=True)
 
-# simulate - how will I even do this? how many arguments should this have?
 """
 /simulate -> persona1 persona2 topic and then the LLM gets in a debate with itself. Thread will be created but the normal
 async feedback task won't run because this is an LLM v LLM debate so there's no need for feedback. 
 To implement this should i consider having two LLM models or just the same model debating itself? i think i might go for two
 models here. The persona will be given in the sysprompt. I will the last message from the other LLM response or the last message
 from the thread to the current LLM's context window of 5 messages. We will see how this goes.
-So the steps:
-1. create the basic command and create a thread from it.
-1.5. Create an asyncio task that monitors the thread for new messages
-2. go to intelligence and invite a second model
-3. give a cheap sysprompt and test. 
 """
 @client.tree.command()
 async def simulate(interaction: discord.Interaction, persona1: str, persona2: str, topic: str):
+    """
+    Simulates a real debate between two AI personas and a topic of your choice
+    """
 
     await interaction.response.defer()
     channel = interaction.channel 
     thread = await channel.create_thread(name=f"Simulate: {topic}", type=discord.ChannelType.public_thread)
 
-    bot_response = f""" This is a public thread dedicated to the debate on the topic: "{topic}"\n"""
+    bot_response = f"""This is a public thread dedicated to the debate on the topic: "{topic}"\nThe AI personas engaging in this debate are _{persona1}_ and _{persona2}_"""
     await interaction.followup.send(f'A public thread has been created for the topic: "{topic}" between the AI personas **{persona1}** and **{persona2}**')
     await thread.send(bot_response)
     # set the slowmode to 30s for productive conversations.
