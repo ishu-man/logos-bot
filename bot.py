@@ -184,16 +184,16 @@ from the thread to the current LLM's context window of 5 messages. We will see h
 @client.tree.command()
 async def simulate(interaction: discord.Interaction, persona1: str, persona2: str, topic: str):
     """
-    Simulates a real debate between two AI personas and a topic of your choice
+    Simulates a real debate between two AI personas for a topic of your choice
     """
 
     await interaction.response.defer()
     channel = interaction.channel 
     thread = await channel.create_thread(name=f"Simulate: {topic}", type=discord.ChannelType.public_thread)
 
-    bot_response = f"""This is a public thread dedicated to the debate on the topic: "{topic}"\nThe AI personas engaging in this debate are _{persona1}_ and _{persona2}_"""
     await interaction.followup.send(f'A public thread has been created for the topic: "{topic}" between the AI personas **{persona1}** and **{persona2}**')
-    await thread.send(bot_response)
+    bot_response = f"""This is a public thread dedicated to the debate on the topic: "{topic}". The AI personas engaging in this debate are {persona1} and {persona2}."""
+    await thread.send(content=bot_response)
     # set the slowmode to 30s for productive conversations.
     await thread.edit(slowmode_delay=30)
 
