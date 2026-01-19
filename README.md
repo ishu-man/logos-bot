@@ -1,2 +1,4 @@
-# logos-bot
-Logos is a Discord based bot that helps users have productive discourse on any topic. 
+# Logos
+> The unexamined life is not worth living — _Socrates_, at his trial
+
+*work in progress*
