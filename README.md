@@ -9,6 +9,7 @@ Logos supports a limited set of commands in its beta that help enforce the centr
 - `/debate @user [topic]`: the main command for starting a private, turn based discussion thread. Logos monitors this thread and intervenes only when there is a strict logical fallacy. 
 - `/argue [your argument]`: use this when you have an argument you want to refine or optimize. The ideal use case would be inside debate threads where the bot will have the relevant context to the conversation.
 - `/simulate [persona A] [persona B] [topic]`: generates a simulated debate between two AI personas on a particular topic. The conversation ends automatically when a conclusion is reached.
+
 **NOTE**: One can debate Logos itself using the `/debate` command, in which case traditional monitoring features are disabled.
 ## Demo
 Here is a screenshot of a demo conversation with the bot:
