@@ -115,7 +115,7 @@ async def get_one_line_stance(
                 }
             ],
             temperature=0.2,
-            model="llama-3.3-70b-versatile",
+            model="llama-3.1-8b-instant",
         )
         return chat_completion.choices[0].message.content
     except Exception as error:
@@ -124,9 +124,6 @@ async def get_one_line_stance(
 
 async def check_argument(messages: list) -> str:
     try:
-        print("This is inside check_argument, the messages being sent are given below:")
-        for message in messages:
-            print(message)
         chat_completion = await client.chat.completions.create(
             messages=messages,
             model="llama-3.3-70b-versatile",
@@ -135,7 +132,6 @@ async def check_argument(messages: list) -> str:
         return chat_completion.choices[0].message.content
     except Exception as error:
         raise RuntimeError("API call error") from error
-
 
 if __name__ == "__main__":
     argument = asyncio.run(get_user_argument())

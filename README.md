@@ -1,4 +1,4 @@
-# Logos (beta)
+# Logos (alpha)
 > The unexamined life is not worth living — _Socrates_, at his trial
 
 Logos is a Discord bot designed to help you have high quality, structured discourse on virtually any topic. It acts as a logical filter, cutting through the noise of unstructured chatter and prioritizes high-signal, dialectical discussions.

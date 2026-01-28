@@ -3,17 +3,16 @@ from discord import app_commands
 from dotenv import load_dotenv
 from groq import AsyncGroq
 
-from keep_alive import keep_alive  # NEW
+from keep_alive import keep_alive
 
 load_dotenv()
 DISCORD_APP_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-TEST_GUILD = discord.Object(id=1457450076812349672)  # for somerville's suite
 groq_client = AsyncGroq(
     api_key=os.environ.get("GROQ_API_KEY"),
 )
 
-keep_alive()  # Test command
+keep_alive()
 
 
 class LogosClient(discord.Client):
@@ -25,9 +24,6 @@ class LogosClient(discord.Client):
 
     async def setup_hook(self):
         await self.tree.sync()  # global sync
-        self.tree.copy_global_to(guild=TEST_GUILD)
-        await self.tree.sync(guild=TEST_GUILD)
-
 
 intents = discord.Intents.default()
 client = LogosClient(intents=intents)
@@ -112,7 +108,6 @@ async def get_feedback_on_last_thread_message(thread: discord.Thread, topic: str
         ):
             # check if the message was sent by the bot and check if it has already been analyzed
             if current_user_ID == previous_user_ID:
-                print("THEY ARE THE SAME!!!")
                 await latest_message.delete()
                 await thread.send(
                     f"{latest_message.author.mention}, this is a **turn-based debate**. Please wait for your opponent to respond before posting again."
@@ -301,9 +296,6 @@ async def monitor_simulated_thread(
         persona1, persona2, topic, 2
     )
 
-    print(persona1_stance)
-    print(persona2_stance)
-
     message_to_first_model = [
         {
             "role": "system",
@@ -465,8 +457,6 @@ async def monitor_simulated_thread(
                 }
             )
 
-            print("THIS IS WHAT THE REFINED MESSAGE IS ----------------------------------------------------")
-            print(refined_message)
             if len(message_to_first_model) > 5:
                 message_to_first_model = prune_messages(message_to_first_model)
             elif len(message_to_second_model) > 5:
@@ -589,14 +579,6 @@ async def thread_with_logos_participating(thread: discord.Thread, topic: str):
 
                 if len(messages) > 5:
                     messages = prune_messages(messages)
-
-                # Debugging print statements incoming:
-                print("\n \t \t AUTHOR OF THAT MESSAGE WAS: \n")
-                print(latest_message.author)
-                print("\n \t \t THE ACTUAL MESSAGE WAS: \n")
-                print(latest_message.clean_content)
-                print("\n \t \t LAST FIVE MESSAGES: \n")
-                print(messages)
 
                 logos_response = await intelligence.check_model_response(
                     messages=messages, model="llama-3.3-70b-versatile"
